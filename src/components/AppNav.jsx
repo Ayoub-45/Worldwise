@@ -1,7 +1,7 @@
 export default function AppNav(){
     return(
        <nav>
-        App Navigation
+       <h1>Hello</h1>
        </nav> 
     )
 }
