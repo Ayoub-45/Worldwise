@@ -18,7 +18,7 @@ export default function Homepage() {
           you have wandered the world.
         </h2>
       </section>
-      <Link to="/pricing">Pricing</Link>
+      <Link to="/app">App</Link>
     </main>
   );
 }
