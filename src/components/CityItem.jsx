@@ -4,7 +4,7 @@ const formatDate = (date) =>
     day: "numeric",
     month: "long",
     year: "numeric",
-  }).format(new Date(date));console.log(styles)
+  }).format(new Date(date));
 export default function CityItem({city}){
    const {cityName,emoji,date}=city
 return (
