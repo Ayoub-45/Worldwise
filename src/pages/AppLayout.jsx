@@ -1,4 +1,3 @@
-import AppNav from "../components/AppNav";
 import Sidebar from "../components/SideBar";
 import Map from "../components/Map";
 import styles from "./AppLayout.module.css"
