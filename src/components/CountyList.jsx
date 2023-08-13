@@ -2,7 +2,9 @@ import styles from "./CountryList.module.css"
 import Message from "./Message"
 import Spinner from "./Spinner"
 import CountryItem from "./CountryItem"
-export default function CityList({cities,isLoading}){
+import { useCities } from "../contexts/CitiesContext"
+export default function CityList(){
+   const {cities,isLoading}=useCities()
     if(isLoading) return <Spinner/>
     const countries=cities.reduce((arr,city)=> 
         {
