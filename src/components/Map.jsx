@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import { useCities } from "../contexts/CitiesContext";
+import { useGeolocation } from "../hooks/useGeolocation";
+import Button from "./Button";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import styles from "./Map.module.css";
 import {
@@ -8,12 +12,14 @@ import {
     useMap,
     useMapEvent,
 } from "react-leaflet";
-import { useEffect, useState } from "react";
-import { useCities } from "../contexts/CitiesContext";
 export default function Map() {
-    const navigate = useNavigate();
     const { cities } = useCities();
     const [mapPosition, setMapPosition] = useState([40, 0]);
+    const {
+        isLoading: isLoadingPosition,
+        position: geoLocationPosition,
+        getPosition,
+    } = useGeolocation();
     const [searchParams] = useSearchParams();
     const mapLat = searchParams.get("lat");
     const mapLng = searchParams.get("lng");
@@ -23,6 +29,16 @@ export default function Map() {
         },
         [mapLat, mapLng]
     );
+    useEffect(
+        function () {
+            if (geoLocationPosition)
+                setMapPosition([
+                    geoLocationPosition.lat,
+                    geoLocationPosition.lng,
+                ]);
+        },
+        [geoLocationPosition]
+    );
     return (
         <div className={styles.mapContainer}>
             <MapContainer
@@ -31,6 +47,9 @@ export default function Map() {
                 scrollWheelZoom={true}
                 className={styles.map}
             >
+                {!geoLocationPosition && <Button type="position" onClick={getPosition}>
+                    {isLoadingPosition ? "Loading..." : "Use your position"}
+                </Button>}
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
@@ -62,7 +81,7 @@ function DetectClick() {
     useMapEvent({
         click: (e) => {
             navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
-        } 
+        },
     });
     return;
 }
