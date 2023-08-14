@@ -1,10 +1,12 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "./Form.module.css";
 import Button from "./Button";
 import BackButton from "./BackButton";
+import Message from "./Message"
+import { useUrlPosition } from "../hooks/useUrlPosition";
 
 export function convertToEmoji(countryCode) {
     const codePoints = countryCode
@@ -13,14 +15,38 @@ export function convertToEmoji(countryCode) {
         .map((char) => 127397 + char.charCodeAt());
     return String.fromCodePoint(...codePoints);
 }
-
+const BASE_URL = `https://api.bigdatacloud.net/data/reverse-geocode-client`;
 function Form() {
+    const [isLoadingGeoCoding, setIsLoadingGeoCoding] = useState(false);
+    const [lat, lng] = useUrlPosition();
     const [cityName, setCityName] = useState("");
     const [country, setCountry] = useState("");
     const [date, setDate] = useState(new Date());
     const [notes, setNotes] = useState("");
-   
-
+    const [emoji,setEmoji]=useState("");
+    const [geoCodeingError,setGeoCodingError]=useState("")
+    useEffect(function () {
+        async function fetchCityData() {
+            try {
+                setIsLoadingGeoCoding(true);
+                setGeoCodingError("")
+                const res = await fetch(
+                    `${BASE_URL}?latitude=${lat}&longitude=${lng}`)
+                const data=await res.json();
+               if(!data.countryCode) throw new Error("Apparently it is not a city. Click somewhere else 😉.")
+                console.log(data)
+                setCityName(data.city || data.locality || "");
+                setCountry(data.countryName)
+                setEmoji(convertToEmoji(data.countryCode))
+            } catch (err) {
+                setGeoCodingError(err.message)
+            } finally {
+                setIsLoadingGeoCoding(false);
+            }
+        }
+        fetchCityData() 
+    }, [lat,lng]);
+    if (geoCodeingError) return <Message message={geoCodeingError}/>
     return (
         <form className={styles.form}>
             <div className={styles.row}>
@@ -30,7 +56,7 @@ function Form() {
                     onChange={(e) => setCityName(e.target.value)}
                     value={cityName}
                 />
-                {/* <span className={styles.flag}>{emoji}</span> */}
+                <span className={styles.flag}>{emoji}</span>
             </div>
 
             <div className={styles.row}>
@@ -55,7 +81,7 @@ function Form() {
 
             <div className={styles.buttons}>
                 <Button type="primary">Add </Button>
-                <BackButton/>
+                <BackButton />
             </div>
         </form>
     );

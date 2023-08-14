@@ -10,7 +10,7 @@ const formatDate = (date) =>
 export default function CityItem({ city }) {
     const {currentCity}=useCities()
     const { cityName, emoji, date, position, id } = city;
-    console.log(position);
+
     return (
         <li>
             <Link
