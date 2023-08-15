@@ -1,7 +1,8 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
 import { useEffect, useState } from "react";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Form.module.css";
 import Button from "./Button";
 import BackButton from "./BackButton";
@@ -24,8 +25,9 @@ function Form() {
     const [date, setDate] = useState(new Date());
     const [notes, setNotes] = useState("");
     const [emoji,setEmoji]=useState("");
-    const [geoCodeingError,setGeoCodingError]=useState("")
+    const [geoCodingError,setGeoCodingError]=useState("")
     useEffect(function () {
+        if(!lat && !lng) return 
         async function fetchCityData() {
             try {
                 setIsLoadingGeoCoding(true);
@@ -46,9 +48,14 @@ function Form() {
         }
         fetchCityData() 
     }, [lat,lng]);
-    if (geoCodeingError) return <Message message={geoCodeingError}/>
+    function handleSubmit(e){
+        e.preventDefault();
+
+    }
+    if(!lat && !lng) return <Message message="Start by clicking on the map"/>
+    if (geoCodingError) return <Message message={geoCodingError}/>
     return (
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.row}>
                 <label htmlFor="cityName">City name</label>
                 <input
