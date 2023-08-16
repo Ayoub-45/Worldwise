@@ -35,6 +35,66 @@
         "lng": 13.376933665713324
       },
       "id": 98443197
+    },
+    {
+      "cityName": "Castello de la Plana",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2023-08-16T10:29:00.759Z",
+      "notes": "life is good",
+      "position": {
+        "lat": "39.97501535728991",
+        "lng": "0.018196105957031253"
+      },
+      "id": 98443198
+    },
+    {
+      "cityName": "Zamora",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2023-08-16T10:35:18.966Z",
+      "notes": "great",
+      "position": {
+        "lat": "41.50034959128928",
+        "lng": "-5.738983154296875"
+      },
+      "id": 98443199
+    },
+    {
+      "cityName": "Zamora",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2023-08-16T10:35:18.966Z",
+      "notes": "great",
+      "position": {
+        "lat": "41.50034959128928",
+        "lng": "-5.738983154296875"
+      },
+      "id": 98443200
+    },
+    {
+      "cityName": "In Salah",
+      "country": "Algeria",
+      "emoji": "🇩🇿",
+      "date": "2023-08-16T10:40:16.005Z",
+      "notes": "Africa is good",
+      "position": {
+        "lat": "27.702983735525862",
+        "lng": "2.96630859375"
+      },
+      "id": 98443201
+    },
+    {
+      "cityName": "Macao",
+      "country": "Portugal",
+      "emoji": "🇵🇹",
+      "date": "2023-08-16T10:42:35.482Z",
+      "notes": "good",
+      "position": {
+        "lat": "39.5633531658293",
+        "lng": "-7.888183593750001"
+      },
+      "id": 98443202
     }
   ]
 }
