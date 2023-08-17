@@ -10,9 +10,10 @@ import CountryList from "./components/CountyList"
 import City from "./components/City"
 import Form from "./components/Form"
 import { CitiesProvider } from "./contexts/CitiesContext";
-
+import { AuthProvider } from "./contexts/FakeAuthContext";
 export default function App() {
     return (
+        <AuthProvider>
         <CitiesProvider>
         <BrowserRouter>
 
@@ -42,5 +43,6 @@ export default function App() {
             </Routes>
         </BrowserRouter>
         </CitiesProvider>
+        </AuthProvider>
     );
 }
